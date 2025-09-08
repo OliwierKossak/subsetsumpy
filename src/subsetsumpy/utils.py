@@ -1,12 +1,12 @@
 import numpy as np
 
 
-def convert_to_decimal_format(decimal_subset: list[int], binary_subset: list[int]):
+def convert_to_decimal_format(basic_set: list[int], binary_subset: list[int]):
     """
     Convert list with binary mask to list with decimal numbers.
 
     Args:
-        decimal_subset: original list with decimial numbers.
+        basic_set: original list with decimial numbers.
         binary_subset: list with elements in binary mask format.
 
     Returns:
@@ -15,7 +15,7 @@ def convert_to_decimal_format(decimal_subset: list[int], binary_subset: list[int
     converted_list = []
     for index in range(len(binary_subset)):
         if binary_subset[index] == 1:
-            converted_list.append(decimal_subset[index])
+            converted_list.append(basic_set[index])
     return converted_list
 
 
@@ -40,7 +40,28 @@ def generate_subset(subset: list[int], binary_output: bool = True):
     return generated_subset
 
 
+def evaluate_subset(
+    basic_set: list[int], binary_subset: list[int], target_sum: int
+):
+    """
+    Evaluates a given subset. Perfect score for subset is 0,
+        that means subset have same sum as target sum.
+
+    Args:
+        basic_set: Original list with decimial numbers.
+        binary_subset: List with elements in binary mask format.
+        target_sum: Sought sum of subset.
+    Returns:
+        int: Calculated score of given subset.
+    """
+    sum_of_subset = sum(convert_to_decimal_format(basic_set, binary_subset))
+    score = abs(target_sum - sum_of_subset)
+
+    return score
+
+
 arr = [1, 4, 3, 6, 5]
 t = generate_subset(arr)
 print(t)
 print(convert_to_decimal_format(arr, t))
+print(evaluate_subset(arr,t, -10))
