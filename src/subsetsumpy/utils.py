@@ -1,6 +1,22 @@
 import numpy as np
 
 
+def convert_to_decimal_format(decimal_subset: list[int],binary_subset: list[int]):
+    """
+    Convert list with binary mask to list with decimal numbers.
+
+    Args:
+        decimal_subset: original list with decimial numbers.
+        binary_subset: list with elements in binary mask format.
+
+    Returns:
+        list[int] : list with elements converted to decimal format
+    """
+    converted_list = []
+    for index in range(len(binary_subset)):
+        if binary_subset[index] == 1:
+            converted_list.append(decimal_subset[index])
+    return converted_list
 
 
 
@@ -20,8 +36,10 @@ def generate_subset(subset: list[int], binary_output: bool = True):
     """
     print(len(subset))
     generate_subset = np.random.randint(0,2, size=len(subset)).tolist()
-    print(generate_subset)
-
-generate_subset([1,4,3,6,5])
+    return generate_subset
+arr =  [1,4,3,6,5]
+t = generate_subset(arr)
+print(t)
+print(convert_to_decimal_format(arr, t))
 
 
