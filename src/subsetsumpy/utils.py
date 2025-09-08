@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def convert_to_decimal_format(decimal_subset: list[int],binary_subset: list[int]):
+def convert_to_decimal_format(decimal_subset: list[int], binary_subset: list[int]):
     """
     Convert list with binary mask to list with decimal numbers.
 
@@ -19,7 +19,6 @@ def convert_to_decimal_format(decimal_subset: list[int],binary_subset: list[int]
     return converted_list
 
 
-
 def generate_subset(subset: list[int], binary_output: bool = True):
     """
     Generate a random subset of the given list.
@@ -34,12 +33,14 @@ def generate_subset(subset: list[int], binary_output: bool = True):
     Returns:
         list[int]: Either a binary mask or the actual subset elements.
     """
-    print(len(subset))
-    generate_subset = np.random.randint(0,2, size=len(subset)).tolist()
-    return generate_subset
-arr =  [1,4,3,6,5]
+
+    generated_subset = np.random.randint(0, 2, size=len(subset)).tolist()
+    if not binary_output:
+        generated_subset = convert_to_decimal_format(subset, generated_subset)
+    return generated_subset
+
+
+arr = [1, 4, 3, 6, 5]
 t = generate_subset(arr)
 print(t)
 print(convert_to_decimal_format(arr, t))
-
-
