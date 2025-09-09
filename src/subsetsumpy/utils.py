@@ -2,6 +2,7 @@ import numpy as np
 
 
 class BaseSubsetMethods:
+
     def convert_to_decimal_format(self, basic_set: list[int], binary_subset: list[int]):
         """
         Convert list with binary mask to list with decimal numbers.
@@ -19,12 +20,12 @@ class BaseSubsetMethods:
                 converted_list.append(basic_set[index])
         return converted_list
 
-    def generate_subset(self, subset: list[int], binary_output: bool = True):
+    def generate_subset(self, basic_set: list[int], binary_output: bool = True):
         """
         Generate a random subset of the given list.
 
         Args:
-            subset: list of integers
+            basic_set: Original list with decimial numbers.
             binary_output:
                 If True, return a binary mask (list of 0/1).
                 If False, return the actual elements of subset.
@@ -33,14 +34,19 @@ class BaseSubsetMethods:
         Returns:
             list[int]: Either a binary mask or the actual subset elements.
         """
+        if not isinstance(basic_set, list):
+            raise TypeError("basic_set must be a list of integers.")
 
-        generated_subset = np.random.randint(0, 2, size=len(subset)).tolist()
+        if not isinstance(binary_output, bool):
+            raise TypeError("binary_output must be a list of bool.")
+
+        generated_subset = np.random.randint(0, 2, size=len(basic_set)).tolist()
         if not binary_output:
-            generated_subset = convert_to_decimal_format(subset, generated_subset)
+            generated_subset = convert_to_decimal_format(basic_set, generated_subset)
         return generated_subset
 
-    def evaluate_subset(self,
-        basic_set: list[int], binary_subset: list[int], target_sum: int
+    def evaluate_subset(
+        self, basic_set: list[int], binary_subset: list[int], target_sum: int
     ):
         """
         Evaluates a given subset. Perfect score for subset is 0,
@@ -53,6 +59,16 @@ class BaseSubsetMethods:
         Returns:
             int: Calculated score of given subset.
         """
+
+        if not isinstance(basic_set, list):
+            raise TypeError("basic_set must be a list of integers.")
+
+        if not isinstance(binary_subset, list):
+            raise TypeError("binary_subset must be a list of integers.")
+
+        if not isinstance(target_sum, int):
+            raise TypeError("target_sum must be an integer.")
+
         sum_of_subset = sum(convert_to_decimal_format(basic_set, binary_subset))
         score = abs(target_sum - sum_of_subset)
 
@@ -70,7 +86,7 @@ class BaseSubsetMethods:
         """
         if not isinstance(binary_number, int):
             raise TypeError(f"Expected int, got {type(binary_number).__name__}")
-        if binary_number not in (0,1):
+        if binary_number not in (0, 1):
             raise ValueError(f"Expected 0 or 1, got {binary_number}")
         return 0 if binary_number == 1 else 1
 
@@ -83,6 +99,10 @@ class BaseSubsetMethods:
         Return:
             list[list[int]]: List with neigbours in binary mask format.
         """
+
+        if not isinstance(binary_subset, list):
+            raise TypeError("binary_subset must be a list of integers.")
+
         neighbours = [binary_subset]
 
         for index in range(len(binary_subset)):
@@ -90,5 +110,3 @@ class BaseSubsetMethods:
             new_neighbour[index] = self.invert_binary_number(new_neighbour[index])
             neighbours.append(new_neighbour)
         return neighbours
-
-
