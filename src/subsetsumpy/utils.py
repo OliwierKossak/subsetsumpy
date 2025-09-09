@@ -2,7 +2,7 @@ import numpy as np
 
 
 class BaseSubsetMethods:
-    def convert_to_decimal_format(basic_set: list[int], binary_subset: list[int]):
+    def convert_to_decimal_format(self, basic_set: list[int], binary_subset: list[int]):
         """
         Convert list with binary mask to list with decimal numbers.
 
@@ -19,7 +19,7 @@ class BaseSubsetMethods:
                 converted_list.append(basic_set[index])
         return converted_list
 
-    def generate_subset(subset: list[int], binary_output: bool = True):
+    def generate_subset(self, subset: list[int], binary_output: bool = True):
         """
         Generate a random subset of the given list.
 
@@ -39,7 +39,7 @@ class BaseSubsetMethods:
             generated_subset = convert_to_decimal_format(subset, generated_subset)
         return generated_subset
 
-    def evaluate_subset(
+    def evaluate_subset(self,
         basic_set: list[int], binary_subset: list[int], target_sum: int
     ):
         """
@@ -57,3 +57,34 @@ class BaseSubsetMethods:
         score = abs(target_sum - sum_of_subset)
 
         return score
+
+    def __invert_binary_number(self, binary_number: int):
+        """
+        Invert binary number. 0 -> 1 , 1 -> 0.
+
+        Args:
+            binary_number: Binary number that will inverted.
+
+        Returns:
+            int: Binary number.
+        """
+        return 0 if binary_number == 1 else 1
+
+    def generate_neighbours(self, binary_subset: list[int]):
+        """
+        Generates neigbours subsets basis on given subset.
+
+        Args:
+            binary_subset:  List with elements in binary mask format.
+        Return:
+            list[list[int]]: List with neigbours in binary mask format.
+        """
+        neighbours = [binary_subset]
+
+        for index in range(len(binary_subset)):
+            new_neighbour = binary_subset.copy()
+            new_neighbour[index] = self.__invert_binary_number(new_neighbour[index])
+            neighbours.append(new_neighbour)
+        return neighbours
+
+
