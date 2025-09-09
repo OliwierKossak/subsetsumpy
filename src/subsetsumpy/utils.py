@@ -14,6 +14,13 @@ class BaseSubsetMethods:
         Returns:
             list[int] : list with elements converted to decimal format
         """
+
+        if not isinstance(basic_set, list):
+            raise TypeError("basic_set must be a list of integers.")
+
+        if not isinstance(binary_subset, list):
+            raise TypeError("binary_subset must be a list of integers.")
+
         converted_list = []
         for index in range(len(binary_subset)):
             if binary_subset[index] == 1:
@@ -69,7 +76,7 @@ class BaseSubsetMethods:
         if not isinstance(target_sum, int):
             raise TypeError("target_sum must be an integer.")
 
-        sum_of_subset = sum(convert_to_decimal_format(basic_set, binary_subset))
+        sum_of_subset = sum(self.convert_to_decimal_format(basic_set, binary_subset))
         score = abs(target_sum - sum_of_subset)
 
         return score
