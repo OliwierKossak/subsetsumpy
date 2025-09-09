@@ -58,7 +58,7 @@ class BaseSubsetMethods:
 
         return score
 
-    def __invert_binary_number(self, binary_number: int):
+    def invert_binary_number(self, binary_number: int):
         """
         Invert binary number. 0 -> 1 , 1 -> 0.
 
@@ -68,6 +68,10 @@ class BaseSubsetMethods:
         Returns:
             int: Binary number.
         """
+        if not isinstance(binary_number, int):
+            raise TypeError(f"Expected int, got {type(binary_number).__name__}")
+        if binary_number not in (0,1):
+            raise ValueError(f"Expected 0 or 1, got {binary_number}")
         return 0 if binary_number == 1 else 1
 
     def generate_neighbours(self, binary_subset: list[int]):
@@ -83,7 +87,7 @@ class BaseSubsetMethods:
 
         for index in range(len(binary_subset)):
             new_neighbour = binary_subset.copy()
-            new_neighbour[index] = self.__invert_binary_number(new_neighbour[index])
+            new_neighbour[index] = self.invert_binary_number(new_neighbour[index])
             neighbours.append(new_neighbour)
         return neighbours
 
