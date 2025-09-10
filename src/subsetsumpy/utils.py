@@ -118,7 +118,14 @@ class BaseSubsetMethods:
             neighbours.append(new_neighbour)
         return neighbours
 
-    def __print_loop_iteration(self, iter: int, score: int, basic_set: list[int], best_subset_binary: list[int],status:bool=False):
+    def print_loop_iteration(
+        self,
+        iter: int,
+        score: int,
+        basic_set: list[int],
+        best_subset_binary: list[int],
+        status: bool = False,
+    ):
         """
         Displays the best subset found in each iteration of the loop.
 
@@ -130,28 +137,7 @@ class BaseSubsetMethods:
             status: True display information about current iteration.
         """
         if status:
-            subset_decimal_format = self.convert_to_decimal_format(basic_set,best_subset_binary)
+            subset_decimal_format = self.convert_to_decimal_format(
+                basic_set, best_subset_binary
+            )
             print(f"Iter: {iter} | Score: {score} | Subset: {subset_decimal_format}")
-
-
-    def __find_best_neighbour(self, best_subset: list[int],neighbours: list[list[int]], target_sum: int):
-        """
-        Searching for the best subset in the generated neighboring solutions.
-
-        Args:
-            best_subset: Currently the best subset that will be compared with other subsets.
-            neighbours: Adjacent subsets generated from best_subset.
-            target_sum: The sought sum of the subset.
-        Returns:
-            list[int]: Best found subset.
-
-        """
-        best_subset_score = self.evaluate_subset(self.basic_set, best_subset, target_sum)
-        current_best_subset = best_subset
-        for neigbour in neighbours:
-            current_neigbour_score = self.evaluate_subset(self.basic_set, neigbour, target_sum)
-            if best_subset_score > current_neigbour_score:
-                current_best_subset = neigbour.copy()
-                best_subset_score = current_neigbour_score
-
-        return current_best_subset
