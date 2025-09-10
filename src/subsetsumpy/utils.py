@@ -103,7 +103,7 @@ class BaseSubsetMethods:
 
         Args:
             binary_subset:  List with elements in binary mask format.
-        Return:
+        Returns:
             list[list[int]]: List with neigbours in binary mask format.
         """
 
